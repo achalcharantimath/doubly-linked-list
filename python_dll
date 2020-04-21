@@ -1,0 +1,156 @@
+# to create node
+
+class node:
+    def __init__(self,data):
+        self.data=data
+        self.next=None
+        self.prev=None
+
+# to create and operate on linked list
+
+class linked_list:
+
+    def __init__(self):
+        self.head=None
+
+    # to display in regular order
+    def display_front(self):
+        # when list is empty
+        if self.head is None:
+            print("list is empty")
+            return
+        # otherwise
+        cur_node = self.head
+        while cur_node:
+            print(cur_node.data)
+            cur_node=cur_node.next
+
+    # to display in reverse order
+    def display_rear(self):
+        # when list is empty
+        if self.head is None:
+            print("list is empty")
+            return
+        # otherwise
+        last_node=self.head
+        while last_node.next:
+            last_node=last_node.next
+
+        while last_node:
+            print(last_node.data)
+            last_node=last_node.prev
+
+    # to insert in front
+    def insert_front(self,data):
+        new_node=node(data)
+
+        if self.head is None:
+            self.head=new_node
+            return
+
+        new_node.next=self.head
+        self.head.prev=new_node;
+        self.head=new_node
+        return
+
+    # to insert at rear
+    def insert_rear(self,data):
+        new_node=node(data)
+
+        if self.head is None:
+            self.head=new_node
+            return
+
+        last_node=self.head
+
+        while last_node.next:
+            last_node=last_node.next
+        new_node.prev=last_node
+        last_node.next=new_node
+
+    # to delete the given data element
+    def delete(self,data):
+        cur_node=self.head
+        # to delete at front
+        if cur_node and cur_node.data==data:
+            self.head=cur_node.next
+            if cur_node.next is None:
+                cur_node.data=None
+                return
+            cur_node.next.prev=None
+            return
+
+        # to arrive at the node with data element
+        while cur_node and cur_node.data!=data:
+            cur_node=cur_node.next
+
+        # when element does not exist
+        if cur_node == None:
+            print('element does not exist')
+            return
+        cur_node.prev.next=cur_node.next
+        if cur_node.next == None:
+            return
+        cur_node.next.prev=cur_node.prev
+
+
+# create an object linked_list class
+
+first_list=linked_list()
+
+#menu
+
+while True:
+
+    print("\n1.insert at front\n2.insert at rear\n3.delete\n4.display \n5.reverse display \n6.exit\n")
+    print("enter your choice\n")
+
+    choice = int(input())
+
+    if choice == 1:
+        print("enter the value")
+        x=input()
+        first_list.insert_front(x)
+
+    elif choice == 2:
+        print("enter the value")
+        x=input()
+        first_list.insert_rear(x)
+
+    elif choice == 3:
+        print("enter the value")
+        d=input()
+        first_list.delete(d)
+
+    elif choice == 4:
+        print(' ')
+        first_list.display_front()
+
+    elif choice == 5:
+        print(' ')
+        first_list.display_rear()
+
+    elif choice == 6:
+        exit()
+    else:
+        print("invalid choice enter valid choice")
+
+
+# initial test cases
+"""
+first_list.insert_front(1)
+first_list.insert_front(2)
+first_list.insert_front(3)
+first_list.insert_front(4)
+first_list.insert_front(5)
+first_list.insert_rear(0)
+print("display front " )
+first_list.display_front()
+print("display rear ")
+first_list.display_rear()
+first_list.delete(5)
+first_list.delete(0)
+print("after deletion ")
+first_list.display_front()
+"""
+
